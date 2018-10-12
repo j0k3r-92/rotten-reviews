@@ -24,12 +24,13 @@ Example running the binaries on `darwin`:
 
 ```console
 $ ./rotten-reviews-macos
-Usage: rotten-reviews [options] <movie> <pages>
+Usage: rotten-reviews [options] <title> <pages>
 
-scrapes audience movie reviews from rotten tomatoes
+scrapes audience movie/tv reviews from rotten tomatoes
 
 Options:
   --csv       exports to csv (defaults to json)
+  --tv        <title> is a tv show (defaults to movie)
   -h, --help  output usage information
 ```
 
@@ -89,8 +90,12 @@ $ rotten-reviews venom_2018 25
   // get 500 reviews (20 per page * 25)
   const pages = 25
 
+  // is this a TV show ?
+  // default value is false
+  const isTV = false
+
   // get using the getAudienceReviews function
-  RottenReviews.getAudienceReviews(movieSlug, pages).then(reviews => {
+  RottenReviews.getAudienceReviews(movieSlug, pages, isTV).then(reviews => {
     console.log(JSON.stringify(reviews, null, 4))
   })
   ```
@@ -113,7 +118,7 @@ $ rotten-reviews venom_2018 25
 
 - [ ] Scrape defined number of reviews instead of pages
 - [ ] Error handling if movie page doesn't exist
-- [ ] Include scraping TV series reviews
+- [*] Include scraping TV series reviews
 
 ## Credits
 
