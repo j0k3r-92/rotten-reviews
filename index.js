@@ -2,9 +2,11 @@ const Axios = require('axios').default
 const cheerio = require('cheerio')
 
 module.exports = {
-  getAudienceReviews: (slug, reviewCount) => {
+  getAudienceReviews: (slug, reviewCount, isTV) => {
     const movieUrl = (slug, page) =>
-      `https://www.rottentomatoes.com/m/${slug}/reviews/?page=${page}&type=user&sort=`
+      `https://www.rottentomatoes.com/${
+        isTV ? 'tv' : 'm'
+      }/${slug}/reviews/?page=${page}&type=user&sort=`
 
     const REVIEWS_PER_PAGE = 20
     const pages = Math.ceil(reviewCount / REVIEWS_PER_PAGE)

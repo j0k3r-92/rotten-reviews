@@ -13,23 +13,24 @@ Future features are listed on the [roadmap](#roadmap).
 
 - Node.js
 
-## Usage
-
 ## Running from binaries
 
 All binaries are compiled using [`pkg`](https://github.com/zeit/pkg) using Node.js `v8.12.0`.
 See the [releases page](https://github.com/grikomsn/rotten-reviews/releases) for the binaries' download links.
 
+## Usage
+
 Example running the binaries on `darwin`:
 
 ```console
 $ ./rotten-reviews-macos
-Usage: rotten-reviews [options] <movie> <count>
+Usage: rotten-reviews [options] <title> <count>
 
-scrapes audience movie reviews from rotten tomatoes
+scrapes audience movie/tv reviews from rotten tomatoes
 
 Options:
   --csv       exports to csv (defaults to json)
+  --tv        <title> is a tv show (defaults to movie)
   -h, --help  output usage information
 ```
 
@@ -89,10 +90,16 @@ $ rotten-reviews venom_2018 2
   // get 500 reviews
   const numOfReviews = 500
 
+  // is this a TV show ?
+  // default value is false
+  const isTV = false
+
   // get using the getAudienceReviews function
-  RottenReviews.getAudienceReviews(movieSlug, numOfReviews).then(reviews => {
-    console.log(JSON.stringify(reviews, null, 2))
-  })
+  RottenReviews.getAudienceReviews(movieSlug, numOfReviews, isTV).then(
+    reviews => {
+      console.log(JSON.stringify(reviews, null, 2))
+    }
+  )
   ```
 
 - Here's the result of the source code above:
