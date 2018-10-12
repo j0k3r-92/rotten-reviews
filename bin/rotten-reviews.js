@@ -8,15 +8,18 @@ const Csv = new Json2CsvParser({
   fields: ['reviewer', 'date', 'stars', 'review'],
 })
 
-Commander.description('scrapes audience movie reviews from rotten tomatoes')
+Commander.description('scrapes audience movie/tv reviews from rotten tomatoes')
   .option('--csv', 'exports to csv (defaults to json)')
-  .arguments('<movie> <pages>')
-  .action((movie, pages) => {
-    RottenReviews.getAudienceReviews(movie, pages).then(reviews => {
-      console.log(
-        Commander.csv ? Csv.parse(reviews) : JSON.stringify(reviews, null, 2)
-      )
-    })
+  .option('--tv', '<title> is a tv show (defaults to movie)')
+  .arguments('<title> <pages>')
+  .action((title, pages) => {
+    RottenReviews.getAudienceReviews(title, pages, Commander.tv).then(
+      reviews => {
+        console.log(
+          Commander.csv ? Csv.parse(reviews) : JSON.stringify(reviews, null, 2)
+        )
+      }
+    )
   })
   .parse(process.argv)
 
