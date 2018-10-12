@@ -24,7 +24,7 @@ Example running the binaries on `darwin`:
 
 ```console
 $ ./rotten-reviews-macos
-Usage: rotten-reviews [options] <title> <pages>
+Usage: rotten-reviews [options] <title> <count>
 
 scrapes audience movie/tv reviews from rotten tomatoes
 
@@ -46,10 +46,10 @@ npm -g i rotten-reviews
 yarn global add rotten-reviews
 ```
 
-- Run `rotten-reviews` with the `movieSlug` and `pages` parameter, for example:
+- Run `rotten-reviews` with the `movieSlug` and `count` (number of reviews) parameter, for example:
 
 ```console
-$ rotten-reviews venom_2018 25
+$ rotten-reviews venom_2018 2
 [
   {
     "reviewer": "Melissa B",
@@ -62,8 +62,8 @@ $ rotten-reviews venom_2018 25
     "date": "October 11, 2018",
     "stars": 2.5,
     "review": "Despite a surprising amount of humor and chemistry between Venom and his host, Venom is mostly inept as both an action and a horror film, with only the slightest amount of soul peering through the thoughtful characterization of Hardy's role. This is a movie you can enjoy while watching and forget the moment you're done."
-  },
-...
+  }
+]
 ```
 
 ### Running from package
@@ -87,16 +87,16 @@ $ rotten-reviews venom_2018 25
   // https://www.rottentomatoes.com/m/venom_2018/reviews
   const movieSlug = 'venom_2018'
 
-  // get 500 reviews (20 per page * 25)
-  const pages = 25
+  // get 500 reviews
+  const numOfReviews = 500
 
   // is this a TV show ?
   // default value is false
   const isTV = false
 
   // get using the getAudienceReviews function
-  RottenReviews.getAudienceReviews(movieSlug, pages, isTV).then(reviews => {
-    console.log(JSON.stringify(reviews, null, 4))
+  RottenReviews.getAudienceReviews(movieSlug, numOfReviews, isTV).then(reviews => {
+    console.log(JSON.stringify(reviews, null, 2))
   })
   ```
 
@@ -104,21 +104,21 @@ $ rotten-reviews venom_2018 25
 
   ```json
   [
-      {
-          "reviewer": "Melissa B",
-          "date": "October 11, 2018",
-          "stars": 5,
-          "review": "I loved it! Didn't expect to like it as much as I did.Some really funny parts and amazing action scenes. Ignore the critics, go see it!"
-      },
-      ...
+    {
+      "reviewer": "Melissa B",
+      "date": "October 11, 2018",
+      "stars": 5,
+      "review": "I loved it! Didn't expect to like it as much as I did.Some really funny parts and amazing action scenes. Ignore the critics, go see it!"
+    },
+    ...
   ]
   ```
 
 ## Roadmap
 
-- [ ] Scrape defined number of reviews instead of pages
-- [ ] Error handling if movie page doesn't exist
-- [*] Include scraping TV series reviews
+- [x] Scrape defined number of reviews instead of pages ([#6](https://github.com/grikomsn/rotten-reviews/pull/6), soon on `v1.1.0`)
+- [x] Error handling if movie page doesn't exist ([#2](https://github.com/grikomsn/rotten-reviews/pull/2), soon on `v1.1.0`)
+- [ ] Include scraping TV series reviews
 
 ## Credits
 
