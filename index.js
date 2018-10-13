@@ -2,11 +2,9 @@ const Axios = require('axios').default
 const cheerio = require('cheerio')
 
 module.exports = {
-  getAudienceReviews: (slug, reviewCount, isTV) => {
-    const movieUrl = (slug, page) =>
-      `https://www.rottentomatoes.com/${
-        isTV ? 'tv' : 'm'
-      }/${slug}/reviews/?page=${page}&type=user&sort=`
+  getAudienceReviews: (slug, reviewCount, isTV = false) => {
+    const movieUrl = (showType, slug, page) =>
+      `https://www.rottentomatoes.com/${showType}/${slug}/reviews/?page=${page}&type=user&sort=`
 
     const REVIEWS_PER_PAGE = 20
     const pages = Math.ceil(reviewCount / REVIEWS_PER_PAGE)
@@ -14,7 +12,7 @@ module.exports = {
     return new Promise(resolve => {
       const pageRequests = []
       for (let i = 0; i < pages; i++) {
-        pageRequests.push(Axios.get(movieUrl(slug, i + 1)))
+        pageRequests.push(Axios.get(movieUrl(isTV ? 'tv' : 'm', slug, i + 1)))
       }
       resolve(pageRequests)
     })
@@ -27,6 +25,9 @@ module.exports = {
               `⚠️  Page not found for '${slug}'. You can check the page manually by opening this link:\n` +
               movieUrl(slug, 1),
           })
+        return Promise.reject({
+          message: `⚠️  An error occured, please try again.`,
+        })
       })
       .then(
         Axios.spread((...requests) => {
